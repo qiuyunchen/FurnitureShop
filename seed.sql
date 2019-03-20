@@ -9,57 +9,63 @@ CREATE TABLE users (
     email VARCHAR UNIQUE NOT NULL,
     full_name VARCHAR NULL,
     phone INT NULL,
-    address VARCHAR NULL,
-    city VARCHAR NULL,
-    state VARCHAR NULL,
-    zip INT NULL,
+    address JSON NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT NOW(),
-    updatedAt VARCHAR NOT NULL
+    updatedAt TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE stores (
     store_id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(user_id) NOT NULL,
+        FOREIGN KEY (user_id) 
+        REFERENCES users(user_id)
+        ON DELETE CASCADE,
     store_name VARCHAR UNIQUE NOT NULL,
     store_logo VARCHAR NULL,
     store_desc VARCHAR NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT NOW(),
-    updatedAt VARCHAR NOT NULL
+    updatedAt TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE orders (
     order_id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(user_id) NULL,
+        FOREIGN KEY (user_id) 
+        REFERENCES users(user_id)
+        ON DELETE CASCADE,
     order_total NUMERIC NOT NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE products (
     product_id SERIAL PRIMARY KEY,
-    store_id INT REFERENCES stores(store_id) NOT NULL,
+    store_id INT REFERENCES stores(store_id) NULL,
+        FOREIGN KEY (store_id) 
+        REFERENCES stores(store_id)
+        ON DELETE CASCADE,
     product_name VARCHAR NOT NULL,
     product_desc VARCHAR NOT NULL,
     product_price NUMERIC NOT NULL,
+    product_imgs JSON NOT NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT NOW(),
-    updatedAt VARCHAR NOT NULL
-);
-
-CREATE TABLE images (
-    img_id SERIAL PRIMARY KEY,
-    product_id INT REFERENCES products(product_id) NOT NULL,
-    img_url VARCHAR NOT NULL,
-    createdAt TIMESTAMP NOT NULL DEFAULT NOW()
+    updatedAt TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE cart_products (
     product_id INT REFERENCES products(product_id) NOT NULL,
     user_id INT REFERENCES users(user_id) NOT NULL,
+        FOREIGN KEY (user_id) 
+        REFERENCES users(user_id)
+        ON DELETE CASCADE,
     quantity INT NOT NULL
 );
 
 CREATE TABLE saved_for_later_products (
     product_id INT REFERENCES products(product_id) NOT NULL,
     user_id INT REFERENCES users(user_id) NOT NULL,
+        FOREIGN KEY (user_id) 
+        REFERENCES users(user_id)
+        ON DELETE CASCADE,
     quantity INT NOT NULL
 );
 
@@ -73,18 +79,21 @@ CREATE TABLE reviews (
     review_id SERIAL PRIMARY KEY,
     product_id INT REFERENCES products(product_id) NOT NULL,
     user_id INT REFERENCES users(user_id) NOT NULL,
+        FOREIGN KEY (user_id) 
+        REFERENCES users(user_id)
+        ON DELETE CASCADE,
     order_id INT REFERENCES orders(order_id) NOT NULL,
     rating VARCHAR NULL,
     comment VARCHAR NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT NOW(),
-    updatedAt VARCHAR NOT NULL
+    updatedAt TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-INSERT INTO users (username, email, createdAt) VALUES 
-('qq', 'qq@qq.com', 'March 19, 2019'),
-('Mo', 'mo@mo.com', 'March 19, 2019');
+INSERT INTO users (username, email) VALUES 
+('qq', 'qq@qq.com'),
+('Mo', 'mo@mo.com');
 
-INSERT INTO stores (user_id, store_name, createdAt) VALUES
-('1', 'Qs Shop', 'March 19, 2019'),
-('1', 'Managed By Q', 'March 20, 2019'),
-('2', 'Mo Tables', 'March 20, 2019');
+INSERT INTO stores (user_id, store_name) VALUES
+('1', 'Qs Shop'),
+('1', 'Managed By Q'),
+('2', 'Mo Tables');

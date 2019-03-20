@@ -4,11 +4,10 @@ module.exports = StoreService;
 
 StoreService.create = ({user_id, store_name, store_logo, store_desc}) =>{
     const sql = `
-    INSERT INTO stores (user_id, store_name, store_logo, store_desc, updatedAt) VALUES
-    ($[user_id], $[store_name], $[store_logo], $[store_desc], $[updatedAt])
+    INSERT INTO stores (user_id, store_name, store_logo, store_desc) VALUES
+    ($[user_id], $[store_name], $[store_logo], $[store_desc])
     `;
-    const updatedAt = new Date().toDateString();
-    return db.none(sql, {user_id, store_name, store_logo, store_desc, updatedAt});
+    return db.none(sql, {user_id, store_name, store_logo, store_desc});
 }
 //test
 // StoreService.create({user_id:2,store_name:'mos 2nd store',store_desc:'selling more Pursuit chairs'})
@@ -42,11 +41,11 @@ StoreService.update = ({store_id, store_name, store_logo, store_desc}) =>{
     WHERE
         store_id=$[store_id]
     `;
-    const updatedAt = new Date.now().toDateString();
+    const updatedAt = new Date();
     return db.none(sql, {store_id, store_name, store_logo, store_desc, updatedAt});
 }
 //test MAKE SURE I PASS IN ALL PROPERTIES OR NULL will overwrite some fields
-// StoreService.update({store_id:6, store_desc:'mo 3rd store', store_name:'mos 3rd store', store_logo:'mo 3rd store logo url'})
+// StoreService.update({store_id:2, store_desc:'Managed By Mo', store_name:'Managed By Mo'})
 // .then(res =>console.log('success: ', res))
 // .catch(e => console.log('error!... ', e))
 

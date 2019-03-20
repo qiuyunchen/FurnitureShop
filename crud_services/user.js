@@ -2,13 +2,12 @@ const db = require('./dbConnect');
 const UserService = {};
 module.exports = UserService;
 
-UserService.create = ({username, email, full_name, phone, address, city, state, zip}) =>{
+UserService.create = ({username, email, full_name, phone, address}) =>{
     const sql = `
-    INSERT INTO users (username, email, full_name, phone, address, city, state, zip, updatedAt) VALUES
-    ($[username], $[email], $[full_name], $[phone], $[address], $[city], $[state], $[zip], $[updatedAt])
+    INSERT INTO users (username, email, full_name, phone, address) VALUES
+    ($[username], $[email], $[full_name], $[phone], $[address])
     `;
-    const updatedAt = new Date().toDateString();
-    return db.none(sql, {username, email, full_name, phone, address, city, state, zip, updatedAt});
+    return db.none(sql, {username, email, full_name, phone, address});
 }
 
 //test
@@ -16,7 +15,7 @@ UserService.create = ({username, email, full_name, phone, address, city, state, 
 // .then( result =>{console.log(result)})
 // .catch(e =>{console.log('error!!!: ', e)});
 
-UserService.read  = (username) =>{
+UserService.read = (username) =>{
     const sql =`
     SELECT
         *
@@ -32,7 +31,7 @@ UserService.read  = (username) =>{
 // .then(user =>console.log(user))
 // .catch(e =>console.log('error: ', e))
 
-UserService.update = ({user_id, username, email, full_name, phone, address, city, state, zip}) =>{
+UserService.update = ({user_id, username, email, full_name, phone, address}) =>{
     const sql = `
     UPDATE users
     SET
@@ -41,30 +40,28 @@ UserService.update = ({user_id, username, email, full_name, phone, address, city
         full_name=$[full_name],
         phone=$[phone],
         address=$[address],
-        city=$[city],
-        state=$[state],
-        zip=$[zip],
         updatedAt=$[updatedAt]
     WHERE
         user_id=$[user_id]
     `;
-    const updatedAt = new Date.now().toDateString();
-    return db.none(sql, {user_id, username, email, full_name, phone, address, city, state, zip, updatedAt});
+    const updatedAt = new Date();
+    return db.none(sql, {user_id, username, email, full_name, phone, address, updatedAt});
 }
 
 //test
-// UserService.update({user_id: 10, address: 'addr', phone: 12345, username: 'haha', full_name:'yeah right', email: 'test@test.com', state: 'NY', zip: 11223, city: 'briarwood'})
+// UserService.update({user_id: 10, address: 'addr', phone: 12345, username: 'haha', full_name:'yeah right', email: 'test@test.com'})
 // .then(result =>{console.log(result)})
 // .catch(e => console.log('error: ', e))
 
 UserService.delete = (user_id) =>{
     const sql = `
-    DELETE FROM users WHERE user_id=$[user_id]
+    DELETE FROM stores WHERE user_id=$[user_id];
+    DELETE FROM users WHERE user_id=$[user_id];
     `;
     return db.none(sql, {user_id});
 }
-
+  
 // test
-// UserService.delete(10)
-// .then(result =>{ console.log(result)})
-// .catch(e =>{console.log('error: ', e)});
+UserService.delete(1)
+.then(result =>{ console.log('success: ', result)})
+.catch(e =>{console.log('error: ', e)});
