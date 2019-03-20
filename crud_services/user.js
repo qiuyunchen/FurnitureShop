@@ -62,6 +62,6 @@ UserService.delete = (user_id) =>{
 }
   
 // test
-UserService.delete(1)
-.then(result =>{ console.log('success: ', result)})
-.catch(e =>{console.log('error: ', e)});
+// UserService.delete(1)
+// .then(result =>{ console.log('success: ', result)})
+// .catch(e =>{console.log('error: ', e)});

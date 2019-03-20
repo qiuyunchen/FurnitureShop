@@ -1,11 +1,11 @@
 const app = require('express')();
 const bodyParser = require('body-parser');
+const {userRouter} = require('./routes/user');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-app.get('/ping', (req, res)=>{
-    res.json({pong: true});
-})
+app.use('/user', userRouter);
+
 
 module.exports = app;
