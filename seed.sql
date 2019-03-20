@@ -7,25 +7,24 @@ CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
     username VARCHAR UNIQUE NOT NULL,
     email VARCHAR UNIQUE NOT NULL,
-    token VARCHAR UNIQUE NULL,
     full_name VARCHAR NULL,
     phone INT NULL,
     address VARCHAR NULL,
     city VARCHAR NULL,
     state VARCHAR NULL,
     zip INT NULL,
-    createdAt VARCHAR NOT NULL,
-    updatedAt TIMESTAMP NOT NULL DEFAULT NOW()
+    createdAt TIMESTAMP NOT NULL DEFAULT NOW(),
+    updatedAt VARCHAR NOT NULL
 );
 
 CREATE TABLE stores (
     store_id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(user_id) NOT NULL,
-    store_name VARCHAR NOT NULL,
+    store_name VARCHAR UNIQUE NOT NULL,
     store_logo VARCHAR NULL,
     store_desc VARCHAR NULL,
-    createdAt VARCHAR NOT NULL,
-    updatedAt TIMESTAMP NOT NULL DEFAULT NOW()
+    createdAt TIMESTAMP NOT NULL DEFAULT NOW(),
+    updatedAt VARCHAR NOT NULL
 );
 
 CREATE TABLE orders (
@@ -41,8 +40,8 @@ CREATE TABLE products (
     product_name VARCHAR NOT NULL,
     product_desc VARCHAR NOT NULL,
     product_price NUMERIC NOT NULL,
-    createdAt VARCHAR NOT NULL,
-    updatedAt TIMESTAMP NOT NULL DEFAULT NOW()
+    createdAt TIMESTAMP NOT NULL DEFAULT NOW(),
+    updatedAt VARCHAR NOT NULL
 );
 
 CREATE TABLE images (
@@ -77,8 +76,8 @@ CREATE TABLE reviews (
     order_id INT REFERENCES orders(order_id) NOT NULL,
     rating VARCHAR NULL,
     comment VARCHAR NULL,
-    createdAt VARCHAR NOT NULL,
-    updatedAt TIMESTAMP NOT NULL DEFAULT NOW()
+    createdAt TIMESTAMP NOT NULL DEFAULT NOW(),
+    updatedAt VARCHAR NOT NULL
 );
 
 INSERT INTO users (username, email, createdAt) VALUES 

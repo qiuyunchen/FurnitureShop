@@ -1,18 +1,18 @@
 const db = require('./dbConnect');
 const UserService = {};
-
+module.exports = UserService;
 
 UserService.create = ({username, email, full_name, phone, address, city, state, zip}) =>{
     const sql = `
-    INSERT INTO users (username, email, full_name, phone, address, city, state, zip, createdAt) VALUES
-    ($[username], $[email], $[full_name], $[phone], $[address], $[city], $[state], $[zip], $[createdAt])
+    INSERT INTO users (username, email, full_name, phone, address, city, state, zip, updatedAt) VALUES
+    ($[username], $[email], $[full_name], $[phone], $[address], $[city], $[state], $[zip], $[updatedAt])
     `;
-    const createdAt = new Date().toDateString();
-    return db.none(sql, {username, email, full_name, phone, address, city, state, zip, createdAt});
+    const updatedAt = new Date().toDateString();
+    return db.none(sql, {username, email, full_name, phone, address, city, state, zip, updatedAt});
 }
 
 //test
-// UserService.create({username: 'test', email: 'test@test.com', createdAt: 'today'})
+// UserService.create({username: 'test', email: 'test@test.com', updatedAt: 'today'})
 // .then( result =>{console.log(result)})
 // .catch(e =>{console.log('error!!!: ', e)});
 
@@ -43,11 +43,13 @@ UserService.update = ({user_id, username, email, full_name, phone, address, city
         address=$[address],
         city=$[city],
         state=$[state],
-        zip=$[zip]
+        zip=$[zip],
+        updatedAt=$[updatedAt]
     WHERE
         user_id=$[user_id]
     `;
-    return db.none(sql, {user_id, username, email, full_name, phone, address, city, state, zip});
+    const updatedAt = new Date.now().toDateString();
+    return db.none(sql, {user_id, username, email, full_name, phone, address, city, state, zip, updatedAt});
 }
 
 //test
@@ -66,6 +68,3 @@ UserService.delete = (user_id) =>{
 // UserService.delete(10)
 // .then(result =>{ console.log(result)})
 // .catch(e =>{console.log('error: ', e)});
-
-
-module.exports = UserService;
