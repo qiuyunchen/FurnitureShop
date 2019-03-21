@@ -32,7 +32,9 @@ userRouter.post('/', (req, res, next) =>{
 userRouter.get('/:username', (req, res, next) =>{
     const {username} = req.params;
     UserService.read(username)
-        .then(user => res.status(200).json(user))
+        .then(user => {
+            res.json(user)
+        })
         .catch(e => next(e));
 })
 

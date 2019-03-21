@@ -1,6 +1,6 @@
 const db = require('./dbConnect');
 const UserService = {};
-module.exports = UserService;
+
 
 UserService.create = ({username, email, full_name, phone, address}) =>{
     const sql = `
@@ -65,3 +65,6 @@ UserService.delete = (user_id) =>{
 // UserService.delete(1)
 // .then(result =>{ console.log('success: ', result)})
 // .catch(e =>{console.log('error: ', e)});
+
+
+module.exports = UserService;
