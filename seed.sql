@@ -45,6 +45,7 @@ CREATE TABLE products (
         REFERENCES stores(store_id)
         ON DELETE CASCADE,
     product_name VARCHAR NOT NULL,
+    product_categ VARCHAR NOT NULL,
     product_desc VARCHAR NOT NULL,
     product_price NUMERIC NOT NULL,
     product_imgs JSON NOT NULL,
@@ -89,6 +90,6 @@ INSERT INTO users (username, email) VALUES
 ('Mo', 'mo@mo.com');
 
 INSERT INTO stores (user_id, store_name) VALUES
-('1', 'Qs Shop'),
+('1', 'Qs 1st Shop'),
 ('1', 'Managed By Q'),
 ('2', 'Mo Tables');

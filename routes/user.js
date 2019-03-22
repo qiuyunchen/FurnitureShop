@@ -4,6 +4,7 @@ const userRouter = express.Router();
 module.exports = {userRouter};
 
 
+// ------------------- user profile routes
 userRouter.post('/', (req, res, next) =>{
     //dummy req.body
     const addr = {
