@@ -34,6 +34,7 @@ CREATE TABLE orders (
         REFERENCES users(user_id)
         ON DELETE CASCADE,
     order_total NUMERIC NOT NULL,
+    ordered_products JSON NOT NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -66,12 +67,6 @@ CREATE TABLE saved_for_later_products (
         FOREIGN KEY (user_id) 
         REFERENCES users(user_id)
         ON DELETE CASCADE,
-    quantity INT NOT NULL
-);
-
-CREATE TABLE ordered_products (
-    order_id INT REFERENCES orders(order_id) NOT NULL,
-    product_id INT REFERENCES products(product_id) NOT NULL,
     quantity INT NOT NULL
 );
 

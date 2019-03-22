@@ -41,9 +41,9 @@ const writeMyCRUDForMePlzImTired = (tableName, [arr1,arr2,arr3,arr4] ) =>{
     `;
 }
 
-const arr1 = ['store_id','product_name','product_desc','product_price','product_imgs'];
+const arr1 = ['product_id', 'user_id', 'order_id', 'rating', 'comment'];
 const arr2 = ['product_id'];
-const arr3 = ['product_id'];
-const arr4 = ['product_id'];
+const arr3 = ['product_id', 'user_id', 'order_id', 'rating', 'comment'];
+const arr4 = ['product_id', 'user_id', 'order_id'];
 
-console.log(writeMyCRUDForMePlzImTired('Product', [arr1, arr2, arr3, arr4]));
+console.log(writeMyCRUDForMePlzImTired('Review', [arr1, arr2, arr3, arr4]));
