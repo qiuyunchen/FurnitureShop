@@ -2,7 +2,7 @@ const db = require('./dbConnect');
 const SavedForLaterProductService = {};
 module.exports = SavedForLaterProductService;
 
-SavedForLaterProductService.create = (product_id, user_id, quantity) =>{
+SavedForLaterProductService.create = ({product_id, user_id, quantity}) =>{
     const sql = `
         INSERT INTO cart_products (product_id, user_id, quantity) VALUES
         ($[product_id]), $[user_id]), $[quantity]))
