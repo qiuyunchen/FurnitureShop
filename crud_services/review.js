@@ -3,7 +3,7 @@ const ReviewService = {};
 module.exports = ReviewService;
 
 
-ReviewService.create = (product_id, user_id, order_id, rating, comment) =>{
+ReviewService.create = ({product_id, user_id, order_id, rating, comment}) =>{
     const sql = `
         INSERT INTO reviews (product_id, user_id, order_id, rating, comment) VALUES
         ($[product_id]), $[user_id]), $[order_id]), $[rating]), $[comment]))

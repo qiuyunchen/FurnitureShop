@@ -55,7 +55,6 @@ UserService.update = ({user_id, username, email, full_name, phone, address}) =>{
 
 UserService.delete = (user_id) =>{
     const sql = `
-    DELETE FROM stores WHERE user_id=$[user_id];
     DELETE FROM users WHERE user_id=$[user_id];
     `;
     return db.none(sql, {user_id});
