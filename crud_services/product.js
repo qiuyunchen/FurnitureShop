@@ -2,7 +2,7 @@ const db = require('./dbConnect');
 const ProductService = {};
 module.exports = ProductService;
 
-ProductService.create = (store_id, product_name, product_desc, product_price, product_imgs) =>{
+ProductService.create = ({store_id, product_name, product_desc, product_price, product_imgs}) =>{
     const sql = `
         INSERT INTO products (store_id, product_name, product_desc, product_price, product_imgs) VALUES
         ($[store_id]), $[product_name]), $[product_desc]), $[product_price]), $[product_imgs]))
@@ -21,7 +21,7 @@ ProductService.read = (product_id) =>{
     return db.one(sql, {product_id: product_id.toLowerCase() });
 }
 
-ProductService.update = ({product_id}) =>{
+ProductService.update = (product_id, {product_name, product_desc, product_price, product_imgs}) =>{
     const sql = `
         UPDATE products
         SET
