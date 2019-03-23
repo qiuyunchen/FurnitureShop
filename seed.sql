@@ -29,18 +29,17 @@ CREATE TABLE stores (
 
 CREATE TABLE orders (
     order_id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES users(user_id) NULL,
+    user_id INT NULL,
         FOREIGN KEY (user_id) 
         REFERENCES users(user_id)
         ON DELETE CASCADE,
-    order_total NUMERIC NOT NULL,
     ordered_products JSON NOT NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE products (
     product_id SERIAL PRIMARY KEY,
-    store_id INT REFERENCES stores(store_id) NULL,
+    store_id INT NULL,
         FOREIGN KEY (store_id) 
         REFERENCES stores(store_id)
         ON DELETE CASCADE,
@@ -54,8 +53,11 @@ CREATE TABLE products (
 );
 
 CREATE TABLE cart_products (
-    product_id INT REFERENCES products(product_id) NOT NULL,
-    user_id INT REFERENCES users(user_id) NOT NULL,
+    product_id INT NOT NULL,
+        FOREIGN KEY (product_id)
+        REFERENCES products(product_id)
+        ON DELETE CASCADE,
+    user_id INT NOT NULL,
         FOREIGN KEY (user_id) 
         REFERENCES users(user_id)
         ON DELETE CASCADE,
@@ -63,7 +65,10 @@ CREATE TABLE cart_products (
 );
 
 CREATE TABLE saved_for_later_products (
-    product_id INT REFERENCES products(product_id) NOT NULL,
+    product_id INT NOT NULL,
+        FOREIGN KEY (product_id)
+        REFERENCES products(product_id)
+        ON DELETE CASCADE,
     user_id INT REFERENCES users(user_id) NOT NULL,
         FOREIGN KEY (user_id) 
         REFERENCES users(user_id)
@@ -73,12 +78,18 @@ CREATE TABLE saved_for_later_products (
 
 CREATE TABLE reviews (
     review_id SERIAL PRIMARY KEY,
-    product_id INT REFERENCES products(product_id) NOT NULL,
-    user_id INT REFERENCES users(user_id) NOT NULL,
+    product_id INT NOT NULL,
+        FOREIGN KEY (product_id) 
+        REFERENCES products(product_id)
+        ON DELETE CASCADE,
+    user_id INT NOT NULL,
         FOREIGN KEY (user_id) 
         REFERENCES users(user_id)
         ON DELETE CASCADE,
-    order_id INT REFERENCES orders(order_id) NOT NULL,
+    order_id INT NOT NULL,
+        FOREIGN KEY (order_id)
+        REFERENCES orders(order_id)
+        ON DELETE CASCADE,
     rating VARCHAR NULL,
     comment VARCHAR NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT NOW(),
@@ -92,4 +103,14 @@ INSERT INTO users (username, email) VALUES
 INSERT INTO stores (user_id, store_name) VALUES
 ('1', 'Qs 1st Shop'),
 ('1', 'Managed By Q'),
-('2', 'Mo Tables');
+('2', 'Mo Tables'),
+('2', 'Mo Chairs');
+
+INSERT INTO products (store_id,product_name,product_categ,product_desc,product_price,product_imgs) VALUES
+('3','round table','table','3ft diameter table','50.99','{"img1":"firebase_img_url"}'),
+('3','rectangular table','table','2.5ft X 6ft table','90','{"img1":"firebase_img_url"}'),
+('4','modern office chair','chair','fancy chair for your fancy office man','39.99','{"img1":"firebase_img_url"}');
+
+INSERT INTO orders (user_id, ordered_products) VALUES
+('1', '[{"product_id":"1", "quantity":"4"}, {"product_id":"2", "quantity":"5"}]');
+
