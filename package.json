@@ -33,6 +33,7 @@
       "**/*.{js,jsx}",
       "!**/node_modules/**",
       "!**/coverage/**",
+      "!**/crud_services/**",
       "!index.js"
     ]
   }

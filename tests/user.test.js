@@ -6,12 +6,12 @@ jest.mock('../crud_services/user')
 const UserService = require('../crud_services/user')
 
 test('calling GET returns 200', done => {
-    UserService.read.mockImplementation(()=> Promise.resolve({terribletest:'2'}));
+    UserService.read.mockImplementation(()=> Promise.resolve('test'));
 
     request(app)
       .get('/user/7')
       .then(response =>{
-          expect(response).toBe({bogus:'1'});
+          expect(response).toBe('should fail');
           done();
       })
       .catch(e=>{
