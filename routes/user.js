@@ -6,24 +6,25 @@ module.exports = {userRouter};
 
 // ------------------- user profile routes
 userRouter.post('/', (req, res, next) =>{
-    //dummy req.body
-    const addr = {
-        addrLine1: '123 South St',
-        city: 'Brooklyn',
-        state: 'NY',
-        zip: 11223,
-    }
-    const user = {
-        username: 'test2',
-        email: 'test2@test.com',
-        full_name: 'lol',
-        phone: '123456',
-        address: JSON.stringify(addr),
-    };
-
-    UserService.create(user)
+    // sample data
+    // const addr = {
+    //     addrLine1: '123 South St',
+    //     city: 'Brooklyn',
+    //     state: 'NY',
+    //     zip: 11223,
+    // }
+    // const user = {
+    //     username: 'test2',
+    //     email: 'test2@test.com',
+    //     full_name: 'lol',
+    //     phone: '123456',
+    //     address: JSON.stringify(addr),
+    // };
+    // const {username, email, full_name, phone, address} = req.body
+    // const user = {username, email, full_name, phone, address: JSON.stringify(address)}
+    UserService.create(req.body)
         .then( ()=>{
-            res.status(200).json({success: `User ${user.username} created.`})
+            res.status(200).json({success: `User ${req.body.username} created.`})
         })
         .catch(e =>{
             next(e);
