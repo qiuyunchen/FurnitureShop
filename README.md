@@ -3,4 +3,4 @@
 
 # FurnitureShop
 backend server for eCommerce app to shop for everything furniture and beyond
-https://homecomfortandbeyond.herokuapp.com/
+https://homecomfortbackend.herokuapp.com/
