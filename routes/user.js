@@ -30,7 +30,7 @@ userRouter.post('/', (req, res, next) =>{
             res.json(user);
         })
         .catch(e =>{
-            next(e);
+            res.json(e)
         })
 })
 
