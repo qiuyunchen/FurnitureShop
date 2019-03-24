@@ -24,7 +24,7 @@ userRouter.post('/', (req, res, next) =>{
     const user = {username, email, full_name, phone, address}
     UserService.create(user)
         .then( ()=>{
-            UserService.read(username);
+            return UserService.read(username);
         })
         .then(user =>{
             res.json(user);
