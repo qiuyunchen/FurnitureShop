@@ -20,11 +20,11 @@ userRouter.post('/', (req, res, next) =>{
     //     phone: '123456',
     //     address: JSON.stringify(addr),
     // };
-    // const {username, email, full_name, phone, address} = req.body
-    // const user = {username, email, full_name, phone, address: JSON.stringify(address)}
-    UserService.create(req.body)
+    const {username, email, full_name, phone, address} = req.body
+    const user = {username, email, full_name, phone, address}
+    UserService.create(user)
         .then( ()=>{
-            res.status(200).json({success: `User ${req.body.username} created.`})
+            res.status(200).json({success: `User ${user.username} created.`})
         })
         .catch(e =>{
             next(e);
