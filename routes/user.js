@@ -35,7 +35,10 @@ userRouter.get('/:username', (req, res, next) =>{
     const {username} = req.params;
     UserService.read(username)
         .then(user => {
+            user[0] ? 
             res.json(user)
+            : 
+            res.json({Error: `Username ${username} does not exist.`})
         })
         .catch(e => next(e));
 })
@@ -43,16 +46,17 @@ userRouter.get('/:username', (req, res, next) =>{
 userRouter.put('/:user_id', (req, res, next) =>{
     const {user_id} = req.params;
     // get info from req.body and pass in as argument for update func
-    const dummyData = {
-        user_id, 
-        username:'lol', 
-        email:'lol@lol.com', 
-        full_name:'lolol', 
-        phone:'123', 
-        address: {"some":"json"},
-    }
-
-    UserService.update(dummyData)
+    // const dummyData = {
+    //     user_id, 
+    //     username:'lol', 
+    //     email:'lol@lol.com', 
+    //     full_name:'lolol', 
+    //     phone:'123', 
+    //     address: {"some":"json"},
+    // }
+    const {username, email, full_name, phone, address} = req.body;
+    const user = {user_id, username, email, full_name, phone, address}
+    UserService.update(user)
         .then(()=>{
             res.status(200)
             .json({success: `User ID ${user_id} updated.`})

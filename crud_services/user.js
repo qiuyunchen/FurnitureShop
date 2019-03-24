@@ -23,7 +23,7 @@ UserService.read = (username) =>{
     WHERE
         LOWER(username)=$[username]
     `;
-    return db.one(sql, {username: username.toLowerCase()});
+    return db.any(sql, {username: username.toLowerCase()});
 }
 
 //test
