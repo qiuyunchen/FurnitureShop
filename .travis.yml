@@ -11,7 +11,7 @@ script:
   - npm test
 deploy:
   provider: heroku
-  api_key: HEROKU_TOKEN
+  api_key: $HEROKU_TOKEN
   app: homecomfortbackend
   on: master
   strategy: git

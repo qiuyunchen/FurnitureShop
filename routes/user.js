@@ -24,7 +24,10 @@ userRouter.post('/', (req, res, next) =>{
     const user = {username, email, full_name, phone, address}
     UserService.create(user)
         .then( ()=>{
-            res.status(200).json({success: `User ${user.username} created.`})
+            UserService.read(username);
+        })
+        .then(user =>{
+            res.json(user);
         })
         .catch(e =>{
             next(e);
@@ -34,9 +37,9 @@ userRouter.post('/', (req, res, next) =>{
 userRouter.get('/:username', (req, res, next) =>{
     const {username} = req.params;
     UserService.read(username)
-        .then(user => {
-            user[0] ? 
-            res.json(user)
+        .then(users => {
+            users[0] ? 
+            res.json(users[0])
             : 
             res.json({Error: `Username ${username} does not exist.`})
         })
@@ -59,10 +62,10 @@ userRouter.put('/:user_id', (req, res, next) =>{
     UserService.update(user)
         .then(()=>{
             res.status(200)
-            .json({success: `User ID ${user_id} updated.`})
+            .json({success: `User ID ${user_id} updated to ${username}.`})
         })
         .catch(e =>{
-            next(e);
+            res.json({Error: `User ID ${user_id} cannot be updated. Either the id is invalid or something else went wrong.`})
         })
 })
 
@@ -74,6 +77,6 @@ userRouter.delete('/:user_id', (req, res, next) =>{
             .json({success: `User ${user_id} deleted.`})
         })
         .catch( e =>{
-            next(e);
+            res.json({Error: `User ${user_id} was not deleted. Either the id doesn't exist or something else went wrong.`})
         })
 })
